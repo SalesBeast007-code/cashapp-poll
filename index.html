@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Consumer Rewards 🇺🇸</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ──────────────────────────────────────────── */
+    :root {
+      --emerald-900: #064e3b;
+      --emerald-700: #047857;
+      --emerald-500: #10b981;
+      --emerald-400: #34d399;
+      --emerald-100: #d1fae5;
+      --emerald-50:  #ecfdf5;
+      --slate-950:   #0b1120;
+      --slate-900:   #0f172a;
+      --slate-800:   #1e293b;
+      --slate-600:   #475569;
+      --slate-400:   #94a3b8;
+      --slate-200:   #e2e8f0;
+      --white:       #ffffff;
+
+      --font-display: 'Sora', sans-serif;
+      --font-body:    'Inter', sans-serif;
+
+      --radius-sm:  6px;
+      --radius-md:  14px;
+      --radius-lg:  22px;
+      --radius-xl:  36px;
+
+      --shadow-card: 0 4px 24px rgba(0,0,0,.12), 0 1px 4px rgba(0,0,0,.08);
+      --shadow-glow: 0 0 40px rgba(16,185,129,.25);
+    }
+
+    /* ── RESET ───────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--slate-950);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ── AMBIENT BACKGROUND ──────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(16,185,129,.18) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 90% 80%,  rgba(16,185,129,.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── LAYOUT HELPERS ──────────────────────────────────── */
+    .container {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, 92%);
+      margin-inline: auto;
+    }
+    section { padding-block: 80px; }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 17, 32, .72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 18px;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--white);
+    }
+    .logo-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--emerald-400);
+      box-shadow: 0 0 10px var(--emerald-400);
+    }
+    .header-badge {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--emerald-400);
+      background: rgba(16,185,129,.1);
+      border: 1px solid rgba(16,185,129,.25);
+      border-radius: 999px;
+      padding: 5px 14px;
+    }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    #hero {
+      padding-block: 110px 90px;
+      text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--emerald-400);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--emerald-400);
+      opacity: .5;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      margin-bottom: 24px;
+      background: linear-gradient(145deg, #fff 40%, var(--emerald-400) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--slate-400);
+      max-width: 580px;
+      margin-inline: auto;
+      line-height: 1.7;
+      margin-bottom: 52px;
+    }
+    /* CTA button */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--emerald-500), var(--emerald-700));
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 18px 42px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 0 rgba(16,185,129,.5);
+      animation: pulse-ring 2.4s ease-in-out infinite;
+      transition: transform .2s, box-shadow .2s;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: var(--shadow-glow), 0 8px 30px rgba(16,185,129,.3);
+      animation: none;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0  0    rgba(16,185,129,.55); }
+      50%       { box-shadow: 0 0 0 16px rgba(16,185,129,0);   }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cta-btn { animation: none; }
+    }
+    .hero-note {
+      margin-top: 18px;
+      font-size: .8rem;
+      color: var(--slate-600);
+    }
+
+    /* ── TRUST BADGES ────────────────────────────────────── */
+    #trust {
+      padding-block: 0 70px;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--slate-400);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px;
+      padding: 9px 20px;
+      transition: border-color .2s, color .2s;
+    }
+    .badge:hover {
+      border-color: rgba(16,185,129,.4);
+      color: var(--emerald-400);
+    }
+    .badge-icon {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+      margin-block: 0;
+    }
+
+    /* ── HOW IT WORKS ────────────────────────────────────── */
+    #how {
+      padding-block: 90px;
+    }
+    .section-label {
+      text-align: center;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--emerald-500);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -.025em;
+      color: var(--white);
+      margin-bottom: 60px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 24px;
+    }
+    .step-card {
+      position: relative;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      overflow: hidden;
+    }
+    .step-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(16,185,129,.07) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .25s;
+    }
+    .step-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(16,185,129,.35);
+      box-shadow: var(--shadow-card), 0 0 30px rgba(16,185,129,.1);
+    }
+    .step-card:hover::before { opacity: 1; }
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.04em;
+      background: linear-gradient(135deg, var(--emerald-400), var(--emerald-700));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 18px;
+      display: block;
+    }
+    .step-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .step-desc {
+      font-size: .9rem;
+      color: var(--slate-400);
+      line-height: 1.65;
+    }
+    /* connector line between steps on desktop */
+    .steps-wrapper {
+      position: relative;
+    }
+
+    /* ── BOTTOM CTA ──────────────────────────────────────── */
+    #cta-section {
+      padding-block: 80px 100px;
+      text-align: center;
+    }
+    .cta-card {
+      background: linear-gradient(135deg, rgba(16,185,129,.1), rgba(6,78,59,.2));
+      border: 1px solid rgba(16,185,129,.25);
+      border-radius: var(--radius-xl);
+      padding: clamp(48px, 6vw, 80px) clamp(28px, 5vw, 80px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      max-width: 720px;
+      margin-inline: auto;
+      box-shadow: var(--shadow-glow);
+    }
+    .cta-card h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 16px;
+    }
+    .cta-card p {
+      color: var(--slate-400);
+      font-size: .98rem;
+      line-height: 1.65;
+      max-width: 440px;
+      margin-inline: auto;
+      margin-bottom: 40px;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding-block: 36px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--slate-400);
+      margin-bottom: 14px;
+    }
+    .footer-legal {
+      font-size: .76rem;
+      color: var(--slate-600);
+      max-width: 560px;
+      margin-inline: auto;
+      line-height: 1.7;
+    }
+    .footer-legal a {
+      color: var(--slate-500);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ── SCROLL REVEAL ───────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .22s; }
+    .reveal-delay-3 { transition-delay: .34s; }
+
+    /* ── MOBILE ──────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      section { padding-block: 60px; }
+      #hero { padding-block: 72px 52px; }
+      .cta-btn { font-size: .98rem; padding: 16px 32px; }
+      .step-card { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        Smart Consumer Rewards 🇺🇸
+      </div>
+      <span class="header-badge">US Residents</span>
+    </div>
+  </header>
+
+  <!-- ── HERO ───────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="container">
+      <p class="hero-eyebrow reveal">Verified Reward Program</p>
+      <h1 class="reveal reveal-delay-1">Unlock Premium<br>Consumer Rewards</h1>
+      <p class="hero-sub reveal reveal-delay-2">
+        Participate in market research and complete sponsored offers to earn
+        high-value gift cards and cash payouts delivered straight to Venmo
+        or your preferred payment app.
+      </p>
+      <a class="cta-btn reveal reveal-delay-3"
+         href="https://singingfiles.com/show.php?l=0&u=2534453&id=74820"
+         target="_blank" rel="noopener noreferrer">
+        View Available Offers 👉
+      </a>
+      <p class="hero-note reveal reveal-delay-3">Free to join · No credit card required</p>
+    </div>
+  </section>
+
+  <!-- ── TRUST BADGES ────────────────────────────────────── -->
+  <section id="trust">
+    <div class="container">
+      <div class="badges">
+        <div class="badge reveal">
+          <span class="badge-icon">✅</span>
+          100% Free to Participate
+        </div>
+        <div class="badge reveal reveal-delay-1">
+          <span class="badge-icon">🔒</span>
+          Secure Portal
+        </div>
+        <div class="badge reveal reveal-delay-2">
+          <span class="badge-icon">🇺🇸</span>
+          US Residents Only
+        </div>
+        <div class="badge reveal reveal-delay-3">
+          <span class="badge-icon">🎁</span>
+          Real Rewards, Real Payouts
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── HOW IT WORKS ────────────────────────────────────── -->
+  <section id="how">
+    <div class="container">
+      <p class="section-label reveal">Simple &amp; Transparent</p>
+      <h2 class="section-title reveal reveal-delay-1">How It Works</h2>
+      <div class="steps steps-wrapper">
+        <div class="step-card reveal">
+          <span class="step-num">01</span>
+          <span class="step-icon">🔗</span>
+          <p class="step-title">Access the Offer Portal</p>
+          <p class="step-desc">
+            Click the "View Available Offers" button on this page. You'll be
+            taken directly to a secure, sponsored offer portal — no sign-up required
+            to browse.
+          </p>
+        </div>
+        <div class="step-card reveal reveal-delay-1">
+          <span class="step-num">02</span>
+          <span class="step-icon">📋</span>
+          <p class="step-title">Answer Questions &amp; Complete Deals</p>
+          <p class="step-desc">
+            Share your consumer preferences through a short survey, then choose
+            from a curated list of sponsored deals that match your profile.
+          </p>
+        </div>
+        <div class="step-card reveal reveal-delay-2">
+          <span class="step-num">03</span>
+          <span class="step-icon">💸</span>
+          <p class="step-title">Claim Your Reward</p>
+          <p class="step-desc">
+            Once your activity is verified, select your preferred reward — gift cards,
+            Venmo payouts, or other cash-equivalent options — and receive it directly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ── BOTTOM CTA ──────────────────────────────────────── -->
+  <section id="cta-section">
+    <div class="container">
+      <div class="cta-card reveal">
+        <h2>Ready to Earn?</h2>
+        <p>
+          Thousands of US consumers participate each month. Offers are
+          limited and replenished regularly — check what's available today.
+        </p>
+        <a class="cta-btn"
+           href="https://singingfiles.com/show.php?l=0&u=2534453&id=74820"
+           target="_blank" rel="noopener noreferrer">
+          View Available Offers 👉
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ──────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <p class="footer-logo">Smart Consumer Rewards 🇺🇸</p>
+      <p class="footer-legal">
+        Terms &amp; Conditions apply. Reward availability may vary. This site is operated
+        by an independent affiliate marketer and is not affiliated with, endorsed by, or
+        sponsored by Venmo, Cash App, PayPal, or any gift card brand mentioned.
+        Participation is open to US residents only. Completing sponsored offers is required
+        to qualify for rewards. See portal for full details.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ── SCROLL REVEAL JS ────────────────────────────────── -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
